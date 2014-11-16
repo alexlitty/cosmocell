@@ -1,10 +1,10 @@
 SOURCES_ceres=ceres/main.cpp
 SRCPATH=src/
 INCPATHS=include/ ../cosmodon/include/
-LIBPATHS=../cosmodon/lib/
+LIBPATHS=lib/ ../cosmodon/lib/
 OBJPATH=obj/
 BINPATH=bin/
-LDFLAGS=-lzmq -lIrrlicht -lGL -lGLU -lXext -lX11 -lXxf86vm -lcosmodon
+LDFLAGS=-lcosmodon -lzmq -lIrrlicht -lGL -lGLU -lXext -lX11 -lXxf86vm
 CFLAGS=-Wall -std=c++11
 
 # Compilers
@@ -36,7 +36,7 @@ CC_win32=/opt/mingw32/cross_win32/bin/i686-w64-mingw32-g++
 CC = $(CC_linux64)
 
 INCFLAGS=$(foreach TMP,$(INCPATHS),-I$(TMP))
-LIBFLAGS=$(foreach TMP,$(LIBPATHS),-L$(TMP:%=%/$(PLATFORM)/))
+LIBFLAGS=$(foreach TMP,$(LIBPATHS),-L$(TMP:%=%$(PLATFORM)/))
 BINARY=$(GOAL)_$(PLATFORM)
 
 # Initial Target

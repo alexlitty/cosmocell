@@ -15,11 +15,10 @@ class layer_route : public layer::base
 
 int main()
 {
-    // Prepare root layer.
-    layer::base *layer_root = new layer_route;
-
     // Start cosmodon.
-    engine ceres(layer_route);
+    engine ceres(new layer_route);
+
+    // 
 
     /*try {
         network::start();
