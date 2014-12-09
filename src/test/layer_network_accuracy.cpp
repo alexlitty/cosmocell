@@ -1,3 +1,4 @@
+#include <limits>
 #include <test/layer.hpp>
 
 using namespace cosmodon;
@@ -33,8 +34,8 @@ bool test::layer::network_accuracy::send_and_verify(network::buffer &data, netwo
     }
 
     // Receive data.
-    for (int i = 0; !in->receive(transferred_data); i++) {
-        if (i == 1000) {
+    for (unsigned int i = 0; !in->receive(transferred_data); i++) {
+        if (i == 10000) {
             std::cout << " - Receiving data failed." << std::endl;
             return false;
         }
@@ -72,9 +73,16 @@ bool test::layer::network_accuracy::tick()
     if (!send_and_verify(buff, m_beta, m_alpha)) {
         return false;
     }
+    
+    // Continue test, informing status.
+    if (sample_data != 0) {
+        std::cout << "\r - " << (sample_data / 2) << " / " << ((std::numeric_limits<uint16_t>::max() / 2) - 1) << " messages sent, received and verified." << std::flush;
+        return true;
+    }
 
-    // Return success.
-    return true;
+    // End test.
+    std::cout << std::endl << " - Network Buffers are operational on this machine." << std::endl;
+    return false;
 }
 
 // Prints introductory message.
