@@ -19,9 +19,14 @@ namespace cosmocell
         account(uint64_t id, std::string username);
 
         /**
+         * Retrieves account ID.
+         */
+        uint64_t get_id() const;
+
+        /**
          * Retrieves username.
          */
-        std::string get_username();
+        std::string get_username() const;
     };
 }
 

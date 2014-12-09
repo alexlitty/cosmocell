@@ -9,8 +9,14 @@ account::account(uint64_t id, std::string username)
     m_username = username;
 }
 
+// Retrieves ID.
+uint64_t account:get_id() const
+{
+    return m_id;
+}
+
 // Retrieves username.
-std::string account::get_username()
+std::string account::get_username() const
 {
     return m_username;
 }
