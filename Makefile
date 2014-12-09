@@ -1,6 +1,7 @@
 SOURCES_ceres=ceres/main.cpp
+SOURCES_test=test/layer_root.cpp test/layer_network_speed.cpp test/layer_network_accuracy.cpp test/main.cpp
 SRCPATH=src/
-INCPATHS=include/ ../cosmodon/include/
+INCPATHS=include/
 LIBPATHS=lib/ ../cosmodon/lib/
 OBJPATH=obj/
 BINPATH=bin/
