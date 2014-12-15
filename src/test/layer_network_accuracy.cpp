@@ -4,76 +4,43 @@
 using namespace cosmodon;
 using namespace cosmocell;
 
-test::layer::network_accuracy::network_accuracy(network::context *context)
+test::layer::network_accuracy::network_accuracy() : m_socket(54321)
 {
-    // Prepare sockets.
-    m_alpha = context->create(network::socket::REQUEST);
-    m_beta = context->create(network::socket::REPLY);
-
-    m_beta->connect(network::endpoint("127.0.0.1", "54321"));
-    m_alpha->bind(network::endpoint("127.0.0.1", "54321"));
-
     m_timer = time(nullptr);
 }
 
 test::layer::network_accuracy::~network_accuracy()
 {
-    delete m_alpha;
-    delete m_beta;
-}
 
-// Sends a message over one socket, and verifies another local socket receives it successfully.
-bool test::layer::network_accuracy::send_and_verify(network::buffer &data, network::socket *out, network::socket *in)
-{
-    static network::buffer transferred_data;
-
-    // Send data.
-    if (!out->send(data)) {
-        std::cout << " - Sending data failed." << std::endl;
-        return false;
-    }
-
-    // Receive data.
-    for (unsigned int i = 0; !in->receive(transferred_data); i++) {
-        if (i == 10000) {
-            std::cout << " - Receiving data failed." << std::endl;
-            return false;
-        }
-    }
-
-    // Verify data.
-    if (transferred_data != data) {
-        std::cout << " - Data comparison failed." << std::endl;
-        return false;
-    }
-    return true;
 }
 
 bool test::layer::network_accuracy::tick()
 {
     static uint16_t sample_data = 0;
     network::buffer buff;
+    std::string address;
 
     // Prepare buffer.
     buff.clear();
     sample_data += 2;
     buff.write(sample_data);
 
-    // Perform one-way test.
-    if (!send_and_verify(buff, m_alpha, m_beta)) {
+    // Send sample data, wait a short time.
+    address = "127.0.0.1";
+    if (!m_socket.send(address, buff)) {
+        std::cout << std::endl << " - Data could not be sent." << std::endl;
         return false;
     }
+    usleep(100);
 
-    // Reset buffer with new data.
-    buff.clear();
-    sample_data += 2;
-    buff.write(sample_data);
-
-    // Perform round-trip test.
-    if (!send_and_verify(buff, m_beta, m_alpha)) {
-        return false;
+    // Wait for sample data.
+    for (uint16_t i = 0; !m_socket.receive(address, buff); i++) {
+        if (i == 10000) {
+            std::cout << " - Data could not be received." << std::endl;
+            return false;
+        }
     }
-    
+
     // Continue test, informing status.
     if (sample_data != 0) {
         std::cout << "\r - " << (sample_data / 2) << " / " << ((std::numeric_limits<uint16_t>::max() / 2) - 1) << " messages sent, received and verified." << std::flush;
@@ -81,7 +48,7 @@ bool test::layer::network_accuracy::tick()
     }
 
     // End test.
-    std::cout << std::endl << " - Network Buffers are operational on this machine." << std::endl;
+    std::cout << std::endl << " - Network Buffers are operational." << std::endl;
     return false;
 }
 

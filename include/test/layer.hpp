@@ -31,9 +31,6 @@ namespace cosmocell
             class root : public base
             {
             protected:
-                // Network context.
-                network::context *m_context;
-
                 // Collection of testing layers.
                 std::vector<base*> m_layers;
 
@@ -68,15 +65,14 @@ namespace cosmocell
             class network_speed : public base
             {
             protected:
-                network::socket *m_in;
-                network::socket *m_out;
+                network::socket::udp m_socket;
                 time_t m_timer;
 
             public:
                 /**
                  * Constructor.
                  */
-                network_speed(network::context *context);
+                network_speed();
 
                 /**
                  * Destructor.
@@ -105,22 +101,14 @@ namespace cosmocell
             class network_accuracy : public base
             {
             protected:
-                network::socket *m_alpha;
-                network::socket *m_beta;
+                network::socket::udp m_socket;
                 time_t m_timer;
 
-                /**
-                 * Send data over one socket, and verify its reception onto another local socket.
-                 *
-                 * Returns false if the data was sent unsuccessfully.
-                 */
-                bool send_and_verify(network::buffer &data, network::socket *in, network::socket *out);
-            
             public:
                 /**
                  * Constructor.
                  */
-                network_accuracy(network::context *context);
+                network_accuracy();
 
                 /**
                  * Destructor.

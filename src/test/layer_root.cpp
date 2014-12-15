@@ -6,13 +6,10 @@ using namespace cosmocell;
 // Initialize the layer.
 test::layer::root::root()
 {
-    // Start sockets.
-    m_context = new cosmodon::network::context;
-
     // Prepare testbench layers.
     m_layer_current = 0;
-    m_layers.push_back(new test::layer::network_speed(m_context));
-    m_layers.push_back(new test::layer::network_accuracy(m_context));
+    m_layers.push_back(new test::layer::network_speed());
+    m_layers.push_back(new test::layer::network_accuracy());
 
     // Prepare testing program.
     m_layers[0]->intro();
@@ -21,7 +18,7 @@ test::layer::root::root()
 // Destruct the layer.
 test::layer::root::~root()
 {
-    delete m_context;
+
 }
 
 // Tick the layer.
