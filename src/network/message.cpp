@@ -33,6 +33,7 @@ bool message::interpret(cosmodon::network::buffer &buff)
     }
 
     // Copy data.
+    m_category = category;
     m_data.write(buff.read_raw(buff.size() - 1), buff.size() - 1);
     return true;
 }

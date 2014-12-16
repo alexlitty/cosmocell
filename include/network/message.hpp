@@ -15,13 +15,27 @@ namespace cosmocell
         class message
         {
             /**
-             * Message category
+             * Message category.
              */
             enum class category_t : uint8_t
             {
                 INVALID,
                 PING,
+
+                /**
+                 * Requests authentication.
+                 *
+                 * string   Username
+                 * string   Password
+                 */
                 AUTH_REQUEST,
+
+                /**
+                 * Reply to authentication request.
+                 *
+                 * account_id_t   Account ID
+                 * string         Username
+                 */
                 AUTH_REPLY,
                 CHAT_SEND,
                 CHAT_UPDATE,

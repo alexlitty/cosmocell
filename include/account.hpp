@@ -1,32 +1,94 @@
 #ifndef COSMOCELL_ACCOUNT
 #define COSMOCELL_ACCOUNT
 
+#include <cosmodon/cosmodon.hpp>
+
 namespace cosmocell
 {
-    class account
+    /**
+     * Type definition for Account Identifiers.
+     */
+    typedef uint32_t account_id;
+
+    /**
+     * Account record.
+     *
+     * If Account ID is 0, this record contains no useful information.
+     */
+    struct account_record : cosmodon::component::network
     {
-    protected:
         // Unique Account ID.
-        uint64_t m_id;
+        account_id id;
 
         // Username.
-        std::string m_username;
+        std::string username;
 
-    public:
         /**
          * Constructor.
          */
-        account(uint64_t id, std::string username);
+        account_record(uint64_t new_id = 0, std::string new_username = "");
 
         /**
-         * Retrieves account ID.
+         * Determines if this is a valid account.
+         *
+         * An invalid account may be instanced by failed authentication.
          */
-        uint64_t get_id() const;
+        bool valid() const;
 
         /**
-         * Retrieves username.
+         * Serialize.
+         *
+         * If this account is invalid, only the Account ID is provided.
          */
-        std::string get_username() const;
+        void network_serialize(cosmodon::buffer &buffer);
+
+        /**
+         * Deserialize.
+         */
+        bool network_deserialize(cosmodon::buffer &buffer);
+    };
+
+    /**
+     * Stores information about an authentication request.
+     */
+    struct auth_request : cosmodon::component::network
+    {
+        // Username.
+        std::string username;
+
+        // Password.
+        std::string password;
+
+        /**
+         * Serialize.
+         */
+        void network_serialize(cosmodon::buffer &buffer);
+
+        /**
+         * Deserialize.
+         */
+        bool network_deserialize(cosmodon::buffer &buffer);
+    };
+
+    /**
+     * Authentication reply.
+     *
+     * Communicates the status of an authentication.
+     */
+    struct auth_reply : cosmodon::component::network
+    {
+        // Authenticated account.
+        account_record account;
+
+        /**
+         * Serialize.
+         */
+        void network_serialize(cosmodon::buffer &buffer);
+
+        /**
+         * Deserialize.
+         */
+        bool network_deserialize(cosmodon::buffer &buffer);
     };
 }
 
