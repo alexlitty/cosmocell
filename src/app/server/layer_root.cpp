@@ -21,7 +21,6 @@ bool cosmocell::layer::server::root::execute()
 
     // Listen for messages.
     while (m_socket.receive(buffer, address)) {
-        std::cout << "[cosmocell] Received something!" << std::endl;
         try {
             buffer >> object;
 
