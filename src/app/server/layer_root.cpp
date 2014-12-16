@@ -15,6 +15,8 @@ bool cosmocell::layer::server::root::execute()
     std::string address;
     cosmocell::network::object object;
 
+    auth_request auth_req;
+
     cosmocell::account_record account;
     std::string username;
     std::string password;
@@ -26,8 +28,7 @@ bool cosmocell::layer::server::root::execute()
 
             // Authentication request.
             if (object == cosmocell::network::object::AUTH_REQUEST) {
-                buffer >> username;
-                buffer >> password;
+                auth_req.network_deserialize(buffer);
                 account = m_auth.authenticate(username, password);
 
                 // Provide an authentication reply.
