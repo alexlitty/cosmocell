@@ -1,5 +1,5 @@
-#ifndef COSMOCELL_APPS_CLIENT_LAYER_ROOT
-#define COSMOCELL_APPS_CLIENT_LAYER_ROOT
+#ifndef COSMOCELL_APPS_SERVER_LAYER_ROOT
+#define COSMOCELL_APPS_SERVER_LAYER_ROOT
 
 #include <cosmodon/cosmodon.hpp>
 
@@ -7,18 +7,29 @@ namespace cosmocell
 {
     namespace layer
     {
-        namespace client
+        namespace server
         {
-            class root : public cosmodon::layer::base
+            class root : public cosmodon::layer
             {
-                // Network context.
-                network::context *m_context;
+                // Socket.
+                cosmodon::socket::udp m_socket;
 
-                // 
+                // Authentication layer.
+                //cosmocell::layer::server::auth m_auth;
+
+                // Chat layer.
+                //cosmodon::layer::server::chat m_chat;
 
             public:
-                // Perform a tick on the root layer.
-                bool tick();
+                /**
+                 * Constructor.
+                 */
+                root();
+
+                /**
+                 * Perform server program.
+                 */
+                bool execute();
             };
         }
     }

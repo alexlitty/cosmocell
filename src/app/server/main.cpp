@@ -1,10 +1,10 @@
-#include <client/layer_root.hpp>
+#include <server/layer_root.hpp>
 
 int main()
 {
-    // Run client.
+    // Run server.
     try {
-        cosmodon::layer *program = new cosmocell::layer::client::root;
+        cosmodon::layer *program = new cosmocell::layer::server::root;
         cosmodon::engine engine(program);
         engine.execute();
     }

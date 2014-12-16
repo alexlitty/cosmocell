@@ -1,5 +1,6 @@
 SOURCES_ceres=ceres/main.cpp
-SOURCES_client=account.cpp network/constant.cpp network/object.cpp app/client/main.cpp app/client/layer_root.cpp app/client/layer_auth.cpp
+SOURCES_client=account.cpp network/constant.cpp network/object.cpp app/client/layer_root.cpp app/client/layer_auth.cpp app/client/main.cpp
+SOURCES_server=account.cpp network/constant.cpp network/object.cpp app/server/layer_root.cpp app/server/main.cpp
 SOURCES_test=test/layer_root.cpp test/layer_network_speed.cpp test/layer_network_accuracy.cpp test/main.cpp
 SRCPATH=src/
 INCPATHS=include/ include/app/
