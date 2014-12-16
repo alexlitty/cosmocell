@@ -1,13 +1,13 @@
 SOURCES_ceres=ceres/main.cpp
 SOURCES_client=account.cpp network/constant.cpp network/object.cpp app/client/layer_root.cpp app/client/layer_auth.cpp app/client/main.cpp
-SOURCES_server=account.cpp network/constant.cpp network/object.cpp app/server/layer_root.cpp app/server/main.cpp
+SOURCES_server=account.cpp network/constant.cpp network/object.cpp app/server/layer_root.cpp app/server/layer_auth.cpp app/server/main.cpp
 SOURCES_test=test/layer_root.cpp test/layer_network_speed.cpp test/layer_network_accuracy.cpp test/main.cpp
 SRCPATH=src/
 INCPATHS=include/ include/app/
 LIBPATHS=lib/ ../cosmodon/lib/
 OBJPATH=obj/
 BINPATH=bin/
-LDFLAGS=-lcosmodon -lzmq -lIrrlicht -lGL -lGLU -lXext -lX11 -lXxf86vm
+LDFLAGS=-lcosmodon
 CFLAGS=-Wall -std=c++11
 
 # Compilers
