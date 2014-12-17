@@ -29,7 +29,7 @@ bool cosmocell::layer::server::root::execute()
             // Authentication request.
             if (object == cosmocell::network::object::AUTH_REQUEST) {
                 auth_req.network_deserialize(buffer);
-                account = m_auth.authenticate(username, password);
+                account = m_auth.authenticate(auth_req.username, auth_req.password);
 
                 // Provide an authentication reply.
                 buffer.clear();
