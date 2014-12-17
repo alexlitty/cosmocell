@@ -1,26 +1,27 @@
 #ifndef COSMOCELL_TEST_LAYER
 #define COSMOCELL_TEST_LAYER
 
+#include <vector>
 #include <cosmodon/cosmodon.hpp>
-
-using namespace cosmodon;
 
 namespace cosmocell
 {
-    namespace test
+    namespace layer
     {
-        namespace layer
+        namespace test
         {
             /**
-             * Base layer for this testing suite.
+             * Base layer for test layers.
              */
-            class base : public cosmodon::layer::base
+            class base : public cosmodon::layer
             {
             public:
                 /**
-                 * Prints an introductory message for testing layer.
+                 * Performs last-minute preparations to start the test.
+                 *
+                 * At minimum, should print an introduction of the test to the screen.
                  */
-                virtual void intro() const = 0;
+                virtual void prepare() = 0;
             };
 
             /**
@@ -28,7 +29,7 @@ namespace cosmocell
              *
              * Runs all testbenches.
              */
-            class root : public base
+            class root : public cosmodon::layer
             {
             protected:
                 // Collection of testing layers.
@@ -49,14 +50,32 @@ namespace cosmocell
                 ~root();
 
                 /**
-                 * Perform a tick on the layer.
+                 * Perform testing program.
                  */
-                bool tick();
+                bool execute();
+            };
+
+            /**
+             * Encompassing buffer test.
+             *
+             * Ensures buffer features act as desired.
+             */
+            class buffer : public base
+            {
+            protected:
+                // Buffer to test.
+                cosmodon::buffer m_buffer;
+
+            public:
+                /**
+                 * Prepares buffer testing.
+                 */
+                void prepare();
 
                 /**
-                 * Prints introdutory message.
+                 * Perform buffer testing.
                  */
-                virtual void intro() const;
+                bool execute();
             };
 
             /**
@@ -65,8 +84,14 @@ namespace cosmocell
             class network_speed : public base
             {
             protected:
-                network::socket::udp m_socket;
-                time_t m_timer;
+                // Socket to perform test with.
+                cosmodon::socket::udp m_socket;
+
+                // Buffer to use with socket.
+                cosmodon::buffer m_buffer;
+
+                // Timer to measure elapsed time.
+                cosmodon::clock m_timer;
 
             public:
                 /**
@@ -75,24 +100,14 @@ namespace cosmocell
                 network_speed();
 
                 /**
-                 * Destructor.
+                 * Prepares speed test.
                  */
-                ~network_speed();
+                void prepare();
 
                 /**
-                 * Perform a tick on the layer.
+                 * Perform speed test.
                  */
-                bool tick();
-
-                /**
-                 * Initiates the test by starting the internal timer.
-                 */
-                void start();
-
-                /**
-                 * Prints introductory message.
-                 */
-                virtual void intro() const;
+                bool execute();
             };
 
             /**
@@ -101,8 +116,14 @@ namespace cosmocell
             class network_accuracy : public base
             {
             protected:
-                network::socket::udp m_socket;
-                time_t m_timer;
+                // Socket to perform test with.
+                cosmodon::socket::udp m_socket;
+
+                // Buffer to use with socket.
+                cosmodon::buffer m_buffer;
+
+                // Timer to measure elapsed time.
+                cosmodon::clock m_timer;
 
             public:
                 /**
@@ -111,19 +132,14 @@ namespace cosmocell
                 network_accuracy();
 
                 /**
-                 * Destructor.
+                 * Prepares accuracy test.
                  */
-                ~network_accuracy();
+                void prepare();
 
                 /**
                  * Perform a tick on the layer.
                  */
-                bool tick();
-
-                /**
-                 * Prints introductory message.
-                 */
-                virtual void intro() const;
+                bool execute();
             };
         }
     }

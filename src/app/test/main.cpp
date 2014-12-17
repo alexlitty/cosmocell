@@ -7,22 +7,16 @@ int main()
 {
     try {
         // Prepare testing program.
-        test::layer::root *program = new test::layer::root;
-        engine cosmodon_engine(program);
+        cosmodon::layer *program = new layer::test::root;
+        cosmodon::engine cosmodon_engine(program);
 
         // Perform tests.
         cosmodon_engine.execute();
     }
 
     // Catch errors.
-    catch(exception::error &e) {
-        debug("error", e.what());
-        return 1;
-    }
-    
-    // Catch fatal errors.
-    catch(exception::fatal &e) {
-        debug("fatal", e.what());
+    catch(const cosmodon::exception::base &e) {
+        std::cout << std::endl << "[error] " << e.what() << std::endl;
         return 1;
     }
     return 0;

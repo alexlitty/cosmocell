@@ -1,28 +1,29 @@
 #include <vector>
 #include <test/layer.hpp>
 
-using namespace cosmocell;
-
 // Initialize the layer.
-test::layer::root::root()
+cosmocell::layer::test::root::root()
 {
     // Prepare testbench layers.
     m_layer_current = 0;
-    m_layers.push_back(new test::layer::network_speed());
-    m_layers.push_back(new test::layer::network_accuracy());
+    m_layers.push_back(new cosmocell::layer::test::buffer);
+    //m_layers.push_back(new cosmocell::layer::test::network_accuracy);
+    //m_layers.push_back(new cosmocell::layer::test::network_speed);
 
-    // Prepare testing program.
-    m_layers[0]->intro();
+    // Prepare first program.
+    m_layers[0]->prepare();
 }
 
 // Destruct the layer.
-test::layer::root::~root()
+cosmocell::layer::test::root::~root()
 {
-
+    for (uint8_t i = 0; i < m_layers.size(); i++) {
+        delete m_layers[i];
+    }
 }
 
-// Tick the layer.
-bool test::layer::root::tick()
+// Perform tests.
+bool cosmocell::layer::test::root::execute()
 {
     // Check if more testbenches are available.
     if (m_layer_current >= m_layers.size()) {
@@ -30,19 +31,13 @@ bool test::layer::root::tick()
     }
 
     // Tick current testbench, and move onward if needed.
-    if (!m_layers[m_layer_current]->tick()) {
+    if (!m_layers[m_layer_current]->execute()) {
         m_layer_current++;
 
         // Print next testbench's introductory message.
         if (m_layer_current < m_layers.size()) {
-            m_layers[m_layer_current]->intro();
+            m_layers[m_layer_current]->prepare();
         }
     }
     return true;
-}
-
-// Print introductory message.
-void test::layer::root::intro() const
-{
-    std::cout << std::endl;
 }

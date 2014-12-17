@@ -1,44 +1,44 @@
 #include <limits>
 #include <test/layer.hpp>
 
-using namespace cosmodon;
-using namespace cosmocell;
-
-test::layer::network_accuracy::network_accuracy() : m_socket(54321)
-{
-    m_timer = time(nullptr);
-}
-
-test::layer::network_accuracy::~network_accuracy()
+// Network accuracy test constructor.
+cosmocell::layer::test::network_accuracy::network_accuracy() : m_socket(54321)
 {
 
 }
 
-bool test::layer::network_accuracy::tick()
+// Prepares network accuracy test.
+void cosmocell::layer::test::network_accuracy::prepare()
+{
+    std::cout << std::endl << "Measuring network accuracy..." << std::endl;
+}
+
+// Performs network accuracy test.
+bool cosmocell::layer::test::network_accuracy::execute()
 {
     static uint16_t sample_data = 0;
-    network::buffer buff;
     std::string address;
 
     // Prepare buffer.
-    buff.clear();
-    sample_data += 2;
-    buff.write(sample_data);
+    sample_data +=2;
+    m_buffer.clear();
+    m_buffer << sample_data;
 
-    // Send sample data, wait a short time.
+    // Send sample data.
     address = "127.0.0.1";
-    if (!m_socket.send(address, buff)) {
-        std::cout << std::endl << " - Data could not be sent." << std::endl;
+    if (!m_socket.send(m_buffer, address)) {
+        std::cout << std::endl << " - Some data could not be sent." << std::endl;
         return false;
     }
-    usleep(100);
 
-    // Wait for sample data.
-    for (uint16_t i = 0; !m_socket.receive(address, buff); i++) {
-        if (i == 10000) {
-            std::cout << " - Data could not be received." << std::endl;
+    // Receive sample data.
+    m_timer.reset();
+    while (!m_socket.receive(m_buffer, address)) {
+        if (m_timer.elapsed_seconds() > 1) {
+            std::cout << " - Some data could not be received." << std::endl;
             return false;
         }
+        ::usleep(100);
     }
 
     // Continue test, informing status.
@@ -48,12 +48,6 @@ bool test::layer::network_accuracy::tick()
     }
 
     // End test.
-    std::cout << std::endl << " - Network Buffers are operational." << std::endl;
+    std::cout << std::endl << " - Cosmodon sockets are sending accurately." << std::endl;
     return false;
-}
-
-// Prints introductory message.
-void test::layer::network_accuracy::intro() const
-{
-    std::cout << std::endl << "Measuring network accuracy..." << std::endl;
 }

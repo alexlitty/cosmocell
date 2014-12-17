@@ -1,7 +1,7 @@
 SOURCES_ceres=ceres/main.cpp
 SOURCES_client=account.cpp network/constant.cpp network/object.cpp app/client/layer_root.cpp app/client/layer_auth.cpp app/client/main.cpp
 SOURCES_server=account.cpp network/constant.cpp network/object.cpp app/server/layer_root.cpp app/server/layer_auth.cpp app/server/main.cpp
-SOURCES_test=test/layer_root.cpp test/layer_network_speed.cpp test/layer_network_accuracy.cpp test/main.cpp
+SOURCES_test=app/test/layer_root.cpp app/test/layer_buffer.cpp app/test/layer_network_accuracy.cpp app/test/layer_network_speed.cpp app/test/main.cpp
 SRCPATH=src/
 INCPATHS=include/ include/app/
 LIBPATHS=lib/ ../cosmodon/lib/
