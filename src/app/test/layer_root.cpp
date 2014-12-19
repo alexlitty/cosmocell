@@ -7,8 +7,8 @@ cosmocell::layer::test::root::root()
     // Prepare testbench layers.
     m_layer_current = 0;
     m_layers.push_back(new cosmocell::layer::test::buffer);
-    //m_layers.push_back(new cosmocell::layer::test::network_accuracy);
-    //m_layers.push_back(new cosmocell::layer::test::network_speed);
+    m_layers.push_back(new cosmocell::layer::test::network_accuracy);
+    m_layers.push_back(new cosmocell::layer::test::network_speed);
 
     // Prepare first program.
     m_layers[0]->prepare();
