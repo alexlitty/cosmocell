@@ -32,14 +32,14 @@ bool cosmocell::layer::test::network_speed::execute()
     if (m_socket.send(m_buffer, address)) {
         count_out++;
     }
-    while (m_socket.receive(m_buffer, address)) {
+    while (m_socket.receive(m_buffer_dummy, address)) {
         count_in++;
     }
 
     // Stop test after three seconds.
-    if (m_timer.elapsed_seconds() > 3) {
-        std::cout << " - Sent " << count_out << " messages @ " << m_socket.rate_out() << std::endl
-                  << " - Received " << count_in << " messages @ " << m_socket.rate_in() << std::endl;
+    if (m_timer.elapsed() > 3) {
+        std::cout << " - Sent " << count_out << " messages @ " << (m_socket.rate_out() * 8 / 1000000) << " Mbps" << std::endl
+                  << " - Received " << count_in << " messages @ " << (m_socket.rate_in() * 8 / 1000000) << " Mbps" <<  std::endl;
         return false;
     }
     return true;

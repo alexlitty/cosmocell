@@ -87,8 +87,11 @@ namespace cosmocell
                 // Socket to perform test with.
                 cosmodon::socket::udp m_socket;
 
-                // Buffer to use with socket.
+                // Buffer to send data.
                 cosmodon::buffer m_buffer;
+
+                // Buffer to receive data.
+                cosmodon::buffer m_buffer_dummy;
 
                 // Timer to measure elapsed time.
                 cosmodon::clock m_timer;

@@ -34,7 +34,7 @@ bool cosmocell::layer::test::network_accuracy::execute()
     // Receive sample data.
     m_timer.reset();
     while (!m_socket.receive(m_buffer, address)) {
-        if (m_timer.elapsed_seconds() > 1) {
+        if (m_timer.elapsed() > 1) {
             std::cout << " - Some data could not be received." << std::endl;
             return false;
         }
