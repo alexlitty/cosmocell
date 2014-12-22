@@ -16,7 +16,7 @@ void cosmocell::layer::test::network_accuracy::prepare()
 // Performs network accuracy test.
 bool cosmocell::layer::test::network_accuracy::execute()
 {
-    static uint16_t sample_data = 0;
+    static uint8_t sample_data = 0;
     std::string address;
 
     // Prepare buffer.
@@ -41,9 +41,15 @@ bool cosmocell::layer::test::network_accuracy::execute()
         ::usleep(100);
     }
 
+    // Check source address.
+    if (address != "127.0.0.1") {
+        std::cout << " - Socket address lost in transfer." << std::endl;
+        return false;
+    }
+
     // Continue test, informing status.
     if (sample_data != 0) {
-        std::cout << "\r - " << (sample_data / 2) << " / " << ((std::numeric_limits<uint16_t>::max() / 2) - 1) << " messages sent, received and verified." << std::flush;
+        std::cout << "\r - " << (sample_data / 2) << " / " << ((std::numeric_limits<uint8_t>::max() / 2)) << " messages sent, received and verified." << std::flush;
         return true;
     }
 

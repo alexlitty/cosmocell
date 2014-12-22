@@ -58,7 +58,7 @@ bool cosmocell::layer::client::auth::execute()
     }
 
     // Re-send authentication, or quit.
-    if (m_clock.elapsed_seconds() > 3) {
+    if (m_clock.elapsed() > 3) {
         if (m_attempts++ < m_attempts_max) {
             send();
         } else {
