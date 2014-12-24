@@ -1,5 +1,5 @@
 #include <limits>
-#include <test/layer.hpp>
+#include <test/layer/network_accuracy.hpp>
 
 // Network accuracy test constructor.
 cosmocell::layer::test::network_accuracy::network_accuracy() : m_socket(54321)

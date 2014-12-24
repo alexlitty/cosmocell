@@ -1,4 +1,4 @@
-#include <test/layer.hpp>
+#include <test/layer/network_speed.hpp>
 
 // Initialize layer.
 cosmocell::layer::test::network_speed::network_speed() : m_socket(12345)

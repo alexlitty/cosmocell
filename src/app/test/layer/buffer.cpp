@@ -1,4 +1,4 @@
-#include <test/layer.hpp>
+#include <test/layer/buffer.hpp>
 
 // Prepare buffer testing.
 void cosmocell::layer::test::buffer::prepare()

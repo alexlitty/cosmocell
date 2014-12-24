@@ -1,5 +1,5 @@
 #include <cosmodon/cosmodon.hpp>
-#include <test/layer.hpp>
+#include <test/layer/root.hpp>
 
 using namespace cosmocell;
 

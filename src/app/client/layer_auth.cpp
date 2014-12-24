@@ -39,19 +39,15 @@ bool cosmocell::layer::client::auth::execute()
 
     // Check for authentication reply.
     while (m_socket->receive(buffer, address)) {
-        std::cout << "Message found, and it is ";
         if (buffer.length() != 0) {
             buffer >> obj;
 
             // Reply found. If valid, stop layer.
             if (obj == cosmocell::network::object::AUTH_REPLY) {
-                std::cout << "correct.";
                 if (reply.network_deserialize(buffer)) {
                     m_account = reply.account;
                     return false;
                 }
-            } else {
-                std::cout << "incorrect.";
             }
         }
         std::cout << std::endl;

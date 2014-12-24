@@ -1,14 +1,21 @@
 #include <vector>
-#include <test/layer.hpp>
+
+#include <test/layer/buffer.hpp>
+#include <test/layer/graphic.hpp>
+#include <test/layer/network_accuracy.hpp>
+#include <test/layer/network_speed.hpp>
+
+#include <test/layer/root.hpp>
 
 // Initialize the layer.
 cosmocell::layer::test::root::root()
 {
     // Prepare testbench layers.
     m_layer_current = 0;
-    m_layers.push_back(new cosmocell::layer::test::buffer);
-    m_layers.push_back(new cosmocell::layer::test::network_accuracy);
-    m_layers.push_back(new cosmocell::layer::test::network_speed);
+    m_layers.push_back(new cosmocell::layer::test::graphic);
+    //m_layers.push_back(new cosmocell::layer::test::buffer);
+    //m_layers.push_back(new cosmocell::layer::test::network_accuracy);
+    //m_layers.push_back(new cosmocell::layer::test::network_speed);
 
     // Prepare first program.
     m_layers[0]->prepare();
