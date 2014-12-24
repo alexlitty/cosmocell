@@ -15,6 +15,9 @@ namespace cosmocell
                 // Test window handle.
                 cosmodon::window m_window;
 
+                // Test shape.
+                cosmodon::shape::triangle triangle;
+
             public:
                 /**
                  * Constructor.
